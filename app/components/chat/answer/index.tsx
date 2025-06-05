@@ -87,7 +87,7 @@ const Answer: FC<IAnswerProps> = ({
       return null
 
     const isLike = rating === 'like'
-    const ratingIconClassname = isLike ? 'text-primary-600 bg-primary-100 hover:bg-primary-200' : 'text-red-600 bg-red-100 hover:bg-red-200'
+    const ratingIconClassname = isLike ? 'text-[#a3228b] bg-primary-100 hover:bg-primary-200' : 'text-red-600 bg-red-100 hover:bg-red-200'
     // The tooltip is always displayed, but the content is different for different scenarios.
     return (
       <Tooltip

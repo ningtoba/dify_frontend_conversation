@@ -83,12 +83,12 @@ const Main: FC<IMainProps> = () => {
   } = useConversation()
 
   const [conversationIdChangeBecauseOfNew, setConversationIdChangeBecauseOfNew, getConversationIdChangeBecauseOfNew] = useGetState(false)
-  const [isChatStarted, { setTrue: setChatStarted, setFalse: setChatNotStarted }] = useBoolean(false)
+  const [isChatStarted, { setTrue: setChatStarted, setFalse: setChatNotStarted }] = useBoolean(true)
   const handleStartChat = (inputs: Record<string, any>) => {
     createNewChat()
     setConversationIdChangeBecauseOfNew(true)
     setCurrInputs(inputs)
-    setChatStarted()
+    // setChatStarted()
     // parse variables in introduction
     setChatList(generateNewChatListWithOpenStatement('', inputs))
   }
@@ -180,7 +180,7 @@ const Main: FC<IMainProps> = () => {
       chatListDomRef.current.scrollTop = chatListDomRef.current.scrollHeight
   }, [chatList, currConversationId])
   // user can not edit inputs if user had send message
-  const canEditInputs = !chatList.some(item => item.isAnswer === false) && isNewConversation
+  // const canEditInputs = !chatList.some(item => item.isAnswer === false) && isNewConversation
   const createNewChat = () => {
     // if new chat is already exist, do not create new chat
     if (conversationList.some(item => item.id === '-1'))
@@ -663,8 +663,8 @@ const Main: FC<IMainProps> = () => {
           </div>
         )}
         {/* main */}
-        <div className='flex-grow flex flex-col h-[calc(100vh_-_3rem)] overflow-y-auto'>
-          <ConfigSence
+        <div className='flex-grow flex flex-col h-[calc(100vh_-_4rem)] overflow-y-auto'>
+          {/* <ConfigSence
             conversationName={conversationName}
             hasSetInputs={hasSetInputs}
             isPublicVersion={isShowPrompt}
@@ -674,11 +674,11 @@ const Main: FC<IMainProps> = () => {
             canEditInputs={canEditInputs}
             savedInputs={currInputs as Record<string, any>}
             onInputsChange={setCurrInputs}
-          ></ConfigSence>
+          ></ConfigSence> */}
 
           {
             hasSetInputs && (
-              <div className='relative grow h-[200px] pc:w-[794px] max-w-full mobile:w-full pb-[66px] mx-auto mb-3.5 overflow-hidden'>
+              <div className='relative grow h-[200px] pc:w-[794px] max-w-full mobile:w-full pb-[66px] mx-auto mb-3.5 mt-3.5 overflow-hidden'>
                 <div className='h-full overflow-y-auto' ref={chatListDomRef}>
                   <Chat
                     chatList={chatList}
