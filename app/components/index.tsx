@@ -101,6 +101,7 @@ const Main: FC<IMainProps> = () => {
 
   const conversationName = currConversationInfo?.name || t('app.chat.newChatDefaultName') as string
   const conversationIntroduction = currConversationInfo?.introduction || ''
+  const suggestedQuestions = currConversationInfo?.suggested_questions || []
 
   const handleConversationSwitch = () => {
     if (!inited)
@@ -117,6 +118,7 @@ const Main: FC<IMainProps> = () => {
       setExistConversationInfo({
         name: item?.name || '',
         introduction: notSyncToStateIntroduction,
+        suggested_questions: suggestedQuestions,
       })
     }
     else {
@@ -193,6 +195,7 @@ const Main: FC<IMainProps> = () => {
         name: t('app.chat.newChatDefaultName'),
         inputs: newConversationInputs,
         introduction: conversationIntroduction,
+        suggested_questions: suggestedQuestions,
       })
     }))
   }
@@ -210,6 +213,7 @@ const Main: FC<IMainProps> = () => {
       isAnswer: true,
       feedbackDisabled: true,
       isOpeningStatement: isShowPrompt,
+      suggestedQuestions: suggestedQuestions,
     }
     if (calculatedIntroduction)
       return [openStatement]
@@ -242,7 +246,15 @@ const Main: FC<IMainProps> = () => {
         setNewConversationInfo({
           name: t('app.chat.newChatDefaultName'),
           introduction,
+          suggested_questions
         })
+        if (isNotNewConversation) {
+          setExistConversationInfo({
+            name: currentConversation.name || t('app.chat.newChatDefaultName'),
+            introduction,
+            suggested_questions
+          })
+        }
         const prompt_variables = userInputsFormToPromptVariables(user_input_form)
         setPromptConfig({
           prompt_template: promptTemplate,
@@ -664,8 +676,8 @@ const Main: FC<IMainProps> = () => {
           </div>
         )}
         {/* main */}
-        <div className='flex-grow flex flex-col h-[calc(100vh_-_4rem)] overflow-y-auto'>
-          {/* <ConfigSence
+  <div className='flex-grow flex flex-col h-[calc(100vh_-_4rem)] overflow-y-auto'>
+    {/* <ConfigSence
             conversationName={conversationName}
             hasSetInputs={hasSetInputs}
             isPublicVersion={isShowPrompt}
@@ -677,24 +689,24 @@ const Main: FC<IMainProps> = () => {
             onInputsChange={setCurrInputs}
           ></ConfigSence> */}
 
-          {
-            hasSetInputs && (
-              <div className='relative grow h-[200px] pc:w-[794px] max-w-full mobile:w-full pb-[66px] mx-auto mb-3.5 mt-3.5 overflow-hidden'>
-                <div className='h-full overflow-y-auto' ref={chatListDomRef}>
-                  <Chat
-                    chatList={chatList}
-                    onSend={handleSend}
-                    onFeedback={handleFeedback}
-                    isResponding={isResponding}
-                    checkCanSend={checkCanSend}
-                    visionConfig={visionConfig}
-                  />
-                </div>
-              </div>)
-          }
-        </div>
-      </div>
-    </div>
+    {
+      hasSetInputs && (
+        <div className='relative grow h-[200px] pc:w-[794px] max-w-full mobile:w-full pb-[66px] mx-auto mb-3.5 mt-3.5 overflow-hidden'>
+          <div className='h-full overflow-y-auto' ref={chatListDomRef}>
+            <Chat
+              chatList={chatList}
+              onSend={handleSend}
+              onFeedback={handleFeedback}
+              isResponding={isResponding}
+              checkCanSend={checkCanSend}
+              visionConfig={visionConfig}
+            />
+          </div>
+        </div>)
+    }
+  </div>
+      </div >
+    </div >
   )
 }
 
