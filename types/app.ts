@@ -102,8 +102,7 @@ export type ConversationItem = {
   id: string
   name: string
   inputs: Record<string, any> | null
-  introduction: string,
-  suggested_questions?: string[]
+  introduction: string
 }
 
 export type AppInfo = {

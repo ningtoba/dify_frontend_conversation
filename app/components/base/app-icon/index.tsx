@@ -28,7 +28,14 @@ const AppIcon: FC<AppIconProps> = ({
         background,
       }}
     >
-      🤖
+      <img
+        src="/MIMOSlogo.png"
+        alt="App Icon"
+        className={classNames(
+          style.icon,
+          size !== 'medium' && style[size],
+        )}
+      />
     </span>
   )
 }
